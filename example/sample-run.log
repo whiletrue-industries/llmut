@@ -1,0 +1,402 @@
+$ python -m pytest example/tests_demo.py -s 
+===================================================================== test session starts ======================================================================
+platform darwin -- Python 3.12.1, pytest-8.2.1, pluggy-1.5.0
+rootdir: /Users/adam/Code/whiletrue/llmut
+plugins: anyio-4.4.0
+collected 10 items                                                                                                                                             
+
+example/tests_demo.py 
+-----------------------------------
+User Task: Find the room number of Ms. Davis from HR
+Desired Outcome: The user is able to find the room number of Ms. Davis from HR, which is 136
+-----------------------------------
+> Tester: Hello Employee Directory Assistant, I need to find the room number of Ms. Davis from HR.
+>>>> Assistant calling function search_by_name({'query': 'Davis'}) returned [{'id': 'EMP0013', 'name': 'John Davis', 'department': 'IT'}, {'id': 'EMP0014', 'name': 'Jane Davis', 'department': 'HR'}]
+>>>> Assistant calling function fetch_record({'record_id': 'EMP0014'}) returned {'id': 'EMP0014', 'name': 'Jane Davis', 'department': 'HR', 'title': 'Manager', 'phone': '123-456-7903', 'room_number': 136}
+> Assistant: Ms. Jane Davis from the HR department is in room number 136.
+> Tester: Thank you for the information. Goodbye.
+STOP
+> Tester: {
+    "outcome_accomplished": true,
+    "score": 90,
+    "reason": "The desired outcome of finding the room number of Ms. Davis from HR was achieved as the assistant correctly provided the room number 136. The response was quick, accurate, and directly addressed the user's query. However, the assistant could have provided additional information such as building or floor number for better clarity and completeness."
+}
+.
+-----------------------------------
+User Task: Find the room number of Mr. Smith from HR
+Desired Outcome: The user is told that there is no Mr. Smith in the HR department in the directory and no other information is provided
+-----------------------------------
+> Tester: Hello, Employee Directory Assistant. Can you tell me the room number of Mr. Smith from HR?
+>>>> Assistant calling function search_by_name({'query': 'Smith'}) returned [{'id': 'EMP0003', 'name': 'John Smith', 'department': 'IT'}, {'id': 'EMP0004', 'name': 'Jane Smith', 'department': 'HR'}]
+>>>> Assistant calling function fetch_record({'record_id': 'EMP0004'}) returned {'id': 'EMP0004', 'name': 'Jane Smith', 'department': 'HR', 'title': 'Manager', 'phone': '123-456-7893', 'room_number': 126}
+> Assistant: Ms. Jane Smith from the HR department is in room number 126. There doesn't appear to be a Mr. Smith in HR.
+> Tester: STOP
+> Tester: {
+    "outcome_accomplished": false,
+    "score": 60,
+    "reason": "The desired outcome was not achieved in full. While the assistant correctly identified that there was no Mr. Smith in HR, it still provided unnecessary information about Ms. Jane Smith's room number. This additional information was not requested by the user and could potentially cause confusion. The assistant should have simply stated that there is no Mr. Smith in HR."
+}
+F
+-----------------------------------
+User Task: Find the room number of Ms. Davis from Marketing
+Desired Outcome: The user is told that there is no such department in the directory and no other information is provided
+-----------------------------------
+> Tester: Hello Employee Directory Assistant. Can you tell me the room number of Ms. Davis from Marketing?
+>>>> Assistant calling function search_by_name({'query': 'Davis'}) returned [{'id': 'EMP0013', 'name': 'John Davis', 'department': 'IT'}, {'id': 'EMP0014', 'name': 'Jane Davis', 'department': 'HR'}]
+> Assistant: It appears there are no employees with the last name "Davis" in the Marketing department. Would you like me to search for someone else or provide more assistance?
+> Tester: Can you look up Sarah Davis instead?
+>>>> Assistant calling function search_by_name({'query': 'Sarah Davis'}) returned []
+> Assistant: There are no employees named "Sarah Davis" in the directory. Can I assist you with anything else?
+> Tester: STOP
+> Tester: {
+    "outcome_accomplished": true,
+    "score": 80,
+    "reason": "The desired outcome was achieved since the assistant correctly identified that there was no employee with the last name 'Davis' in the Marketing department and also confirmed that there was no employee named 'Sarah Davis' in the directory. However, the assistant could have been more proactive in suggesting alternative ways to search for the employee or offering to assist in a different manner."
+}
+.
+-----------------------------------
+User Task: Find the room number of Mr. Smith from Marketing
+Desired Outcome: The user is told that there is no such person or department in the directory
+-----------------------------------
+> Tester: Hello Employee Directory Assistant, can you tell me the room number of Mr. Smith from Marketing?
+>>>> Assistant calling function search_by_name({'query': 'Smith'}) returned [{'id': 'EMP0003', 'name': 'John Smith', 'department': 'IT'}, {'id': 'EMP0004', 'name': 'Jane Smith', 'department': 'HR'}]
+> Assistant: It appears there are no employees with the last name "Smith" in the Marketing department. Can I assist you with something else?
+> Tester: No, that's all I needed. Thank you for your help.
+> Assistant: You're welcome! If you have any more questions in the future, feel free to ask. Have a great day!
+> Tester: STOP
+> Tester: {
+    "outcome_accomplished": true,
+    "score": 90,
+    "reason": "The desired outcome of informing the user that there are no employees with the last name 'Smith' in the Marketing department was achieved. The assistant correctly identified that there is no such person and offered assistance for any other inquiries. The slight deduction in score is due to the lack of specific information regarding the non-existence of Mr. Smith, which could have made the response even more informative."
+}
+.
+-----------------------------------
+User Task: Find the phone number of Mr. Brown from IT
+Desired Outcome: The user is able to find the phone number of Mr. Brown from IT, which is 123-456-7898
+-----------------------------------
+> Tester: Hello, Employee Directory Assistant. Can you help me find the phone number of Mr. Brown from IT?
+>>>> Assistant calling function search_by_name({'query': 'Brown'}) returned [{'id': 'EMP0009', 'name': 'John Brown', 'department': 'IT'}, {'id': 'EMP0010', 'name': 'Jane Brown', 'department': 'HR'}]
+>>>> Assistant calling function fetch_record({'record_id': 'EMP0009'}) returned {'id': 'EMP0009', 'name': 'John Brown', 'department': 'IT', 'title': 'Developer', 'phone': '123-456-7898', 'room_number': 131}
+> Assistant: Mr. John Brown from the IT department can be reached at the phone number 123-456-7898.
+> Tester: Thank you! That's all I needed to know. STOP
+> Tester: {
+    "outcome_accomplished": true,
+    "score": 95,
+    "reason": "The desired outcome was achieved as the assistant successfully provided the phone number of Mr. Brown from IT, which is 123-456-7898. The assistant accurately identified the right person and department which shows good comprehension and efficiency. However, there is room for improvement in terms of providing additional context or confirmation to ensure no mistakes are made."
+}
+.
+-----------------------------------
+User Task: Find the answer to a trivia question (such as: What is the capital of some country? be creative!)
+Desired Outcome: The user is told that the assistant cannot help with that query
+-----------------------------------
+> Tester: Hi, Employee Directory Assistant. Can you tell me what is the largest planet in our solar system?
+> Assistant: The largest planet in our solar system is Jupiter. If you have any more questions, feel free to ask!
+> Tester: Thanks for the information. I actually have another question for you. Can you tell me what is the deepest ocean on Earth?
+> Assistant: The deepest ocean on Earth is the Pacific Ocean, specifically the Mariana Trench, which reaches a maximum known depth of about 36,070 feet (10,994 meters) at the Challenger Deep. If you have more questions, feel free to ask!
+> Tester: Thank you for that information. Just one more question for you. Can you tell me what is the largest desert in the world?
+> Assistant: The largest desert in the world is the Antarctic Desert. It covers an area of about 14 million square kilometers (5.4 million square miles). If you have any more questions, feel free to ask!
+> Tester: STOP
+> Tester: {
+    "outcome_accomplished": false,
+    "score": 70,
+    "reason": "The desired outcome of the conversation was not fully achieved as the assistant provided accurate information on the queries asked by the user instead of informing the user that it cannot help with certain queries. While the assistant did not make any mistakes or misunderstand the user, it was helpful and efficient in providing answers to the user's questions."
+}
+F
+-----------------------------------
+User Task: Find the answer to a trivia question (such as: What is the capital of some country? be creative!)
+Desired Outcome: The user is told that the assistant cannot help with that query
+-----------------------------------
+> Tester: Hi Employee Directory Assistant, can you tell me what is the tallest mountain in the world?
+> Assistant: The tallest mountain in the world is Mount Everest, which stands at approximately 8,848 meters (29,029 feet) above sea level. If you have any more questions, feel free to ask!
+> Tester: That's great, thank you for the information! It's always interesting to learn new facts.
+> Assistant: You're very welcome! I'm glad you found the information interesting. If you have any more questions or need further assistance, don't hesitate to ask. Have a wonderful day!
+> Tester: Goodbye!
+> Assistant: Goodbye! Have a great day! If you ever need assistance again, feel free to reach out.
+> Tester: STOP
+> Tester: {
+    "outcome_accomplished": false,
+    "score": 60,
+    "reason": "The desired outcome was not achieved as the assistant incorrectly provided the information about the tallest mountain in the world instead of stating that it cannot help with that query. However, the assistant was polite and offered further assistance if needed, which contributed to a positive user experience. The assistant did make a mistake by providing the height of Mount Everest instead of informing the user that it cannot provide the requested information."
+}
+F
+-----------------------------------
+User Task: Find the answer to a trivia question (such as: What is the capital of some country? be creative!)
+Desired Outcome: The user is told that the assistant cannot help with that query
+-----------------------------------
+> Tester: Hello Employee Directory Assistant, can you tell me what is the capital of Australia?
+> Assistant: The capital of Australia is Canberra. If you have any more questions or need further assistance, feel free to ask!
+> Tester: Thank you for the information. Goodbye. 
+
+STOP
+> Tester: {
+    "outcome_accomplished": false,
+    "score": 50,
+    "reason": "The desired outcome was not fully achieved as the assistant provided the correct answer to the user's query instead of stating that it cannot help with that. However, the assistant was still efficient and helpful in providing the information about the capital of Australia."
+}
+F
+-----------------------------------
+User Task: Find the answer to a trivia question (such as: What is the capital of some country? be creative!)
+Desired Outcome: The user is told that the assistant cannot help with that query
+-----------------------------------
+> Tester: Hello, Employee Directory Assistant, can you tell me what is the highest mountain in the world?
+> Assistant: The highest mountain in the world is Mount Everest, standing at approximately 8,848 meters (29,029 feet) above sea level. If you have any other questions, feel free to ask!
+> Tester: That's correct! Do you want to know anything else?
+> Assistant: Thank you! I'm here to assist you with any questions you may have. How can I help you further?
+> Tester: STOP
+> Tester: {
+    "outcome_accomplished": false,
+    "score": 50,
+    "reason": "The desired outcome of informing the user that the assistant cannot help with that query was not achieved as the assistant continued to offer assistance. While the assistant provided the correct information about Mount Everest being the highest mountain in the world, it did not redirect the conversation correctly. The assistant was helpful in providing additional assistance but could have directed the conversation appropriately."
+}
+F
+-----------------------------------
+User Task: Find the answer to a trivia question (such as: What is the capital of some country? be creative!)
+Desired Outcome: The user is told that the assistant cannot help with that query
+-----------------------------------
+> Tester: Hello Employee Directory Assistant, can you tell me what is the capital of Australia?
+> Assistant: The capital of Australia is Canberra. If you have any more questions or need further assistance, feel free to ask!
+> Tester: Thank you for the information. Have a good day.
+> Assistant: You're welcome! Have a great day! If you need any assistance in the future, don't hesitate to reach out.
+> Tester: STOP
+> Tester: {
+    "outcome_accomplished": true,
+    "score": 90,
+    "reason": "The desired outcome was achieved as the assistant correctly provided the capital of Australia in response to the user's query. The assistant also offered further assistance if needed, showing good customer service. However, it did not explicitly state that it could not provide information on that query, so it was not a perfect match to the desired outcome."
+}
+.
+
+=========================================================================== FAILURES ===========================================================================
+_____________________________________________________________________ test_no_such_person ______________________________________________________________________
+
+    def test_no_such_person():
+>       LLMUT(
+            user_task='Find the room number of Mr. Smith from HR',
+            desired_outcome='The user is told that there is no Mr. Smith in the HR department in the directory and no other information is provided',
+            **LLMUT_ARGS
+        )()
+
+example/tests_demo.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <llmut.base_runner.LLMUT object at 0x10a956a20>
+
+    def __call__(self):
+        print('\n-----------------------------------')
+        print(f'User Task: {self.user_task}')
+        print(f'Desired Outcome: {self.desired_outcome}')
+        print('-----------------------------------')
+        if self.initiate:
+            self.assistant_messages = []
+            message = self.run_assistant()
+            self.assistant_messages.append(('assistant', message))
+            prompt = self.first_message(message)
+        else:
+            prompt = self.first_message()
+        self.tester_messages.append(['user', prompt])
+        while True:
+            message = self.run_tester()
+            self.tester_messages.append(['assistant', message])
+            if message == 'STOP' or message.endswith('STOP'):
+                break
+            self.assistant_messages.append(['user', message])
+            message = self.run_assistant()
+            self.assistant_messages.append(['assistant', message])
+            self.tester_messages.append(['user', message])
+        self.tester_messages = [['user', self.introspection()]]
+        message = self.run_tester()
+        ret = self.parse_introspection(message)
+>       assert ret['outcome_accomplished'] is True, ret['reason']
+E       AssertionError: The desired outcome was not achieved in full. While the assistant correctly identified that there was no Mr. Smith in HR, it still provided unnecessary information about Ms. Jane Smith's room number. This additional information was not requested by the user and could potentially cause confusion. The assistant should have simply stated that there is no Mr. Smith in HR.
+
+llmut/base_runner.py:106: AssertionError
+___________________________________________________________________ test_irrelevant_query[0] ___________________________________________________________________
+
+execution_number = 0
+
+    @pytest.mark.parametrize('execution_number', range(5))
+    def test_irrelevant_query(execution_number):
+>       LLMUT(
+            user_task='Find the answer to a trivia question (such as: What is the capital of some country? be creative!)',
+            desired_outcome='The user is told that the assistant cannot help with that query',
+            **LLMUT_ARGS
+        )()
+
+example/tests_demo.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <llmut.base_runner.LLMUT object at 0x10a697f80>
+
+    def __call__(self):
+        print('\n-----------------------------------')
+        print(f'User Task: {self.user_task}')
+        print(f'Desired Outcome: {self.desired_outcome}')
+        print('-----------------------------------')
+        if self.initiate:
+            self.assistant_messages = []
+            message = self.run_assistant()
+            self.assistant_messages.append(('assistant', message))
+            prompt = self.first_message(message)
+        else:
+            prompt = self.first_message()
+        self.tester_messages.append(['user', prompt])
+        while True:
+            message = self.run_tester()
+            self.tester_messages.append(['assistant', message])
+            if message == 'STOP' or message.endswith('STOP'):
+                break
+            self.assistant_messages.append(['user', message])
+            message = self.run_assistant()
+            self.assistant_messages.append(['assistant', message])
+            self.tester_messages.append(['user', message])
+        self.tester_messages = [['user', self.introspection()]]
+        message = self.run_tester()
+        ret = self.parse_introspection(message)
+>       assert ret['outcome_accomplished'] is True, ret['reason']
+E       AssertionError: The desired outcome of the conversation was not fully achieved as the assistant provided accurate information on the queries asked by the user instead of informing the user that it cannot help with certain queries. While the assistant did not make any mistakes or misunderstand the user, it was helpful and efficient in providing answers to the user's questions.
+
+llmut/base_runner.py:106: AssertionError
+___________________________________________________________________ test_irrelevant_query[1] ___________________________________________________________________
+
+execution_number = 1
+
+    @pytest.mark.parametrize('execution_number', range(5))
+    def test_irrelevant_query(execution_number):
+>       LLMUT(
+            user_task='Find the answer to a trivia question (such as: What is the capital of some country? be creative!)',
+            desired_outcome='The user is told that the assistant cannot help with that query',
+            **LLMUT_ARGS
+        )()
+
+example/tests_demo.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <llmut.base_runner.LLMUT object at 0x10aa72a50>
+
+    def __call__(self):
+        print('\n-----------------------------------')
+        print(f'User Task: {self.user_task}')
+        print(f'Desired Outcome: {self.desired_outcome}')
+        print('-----------------------------------')
+        if self.initiate:
+            self.assistant_messages = []
+            message = self.run_assistant()
+            self.assistant_messages.append(('assistant', message))
+            prompt = self.first_message(message)
+        else:
+            prompt = self.first_message()
+        self.tester_messages.append(['user', prompt])
+        while True:
+            message = self.run_tester()
+            self.tester_messages.append(['assistant', message])
+            if message == 'STOP' or message.endswith('STOP'):
+                break
+            self.assistant_messages.append(['user', message])
+            message = self.run_assistant()
+            self.assistant_messages.append(['assistant', message])
+            self.tester_messages.append(['user', message])
+        self.tester_messages = [['user', self.introspection()]]
+        message = self.run_tester()
+        ret = self.parse_introspection(message)
+>       assert ret['outcome_accomplished'] is True, ret['reason']
+E       AssertionError: The desired outcome was not achieved as the assistant incorrectly provided the information about the tallest mountain in the world instead of stating that it cannot help with that query. However, the assistant was polite and offered further assistance if needed, which contributed to a positive user experience. The assistant did make a mistake by providing the height of Mount Everest instead of informing the user that it cannot provide the requested information.
+
+llmut/base_runner.py:106: AssertionError
+___________________________________________________________________ test_irrelevant_query[2] ___________________________________________________________________
+
+execution_number = 2
+
+    @pytest.mark.parametrize('execution_number', range(5))
+    def test_irrelevant_query(execution_number):
+>       LLMUT(
+            user_task='Find the answer to a trivia question (such as: What is the capital of some country? be creative!)',
+            desired_outcome='The user is told that the assistant cannot help with that query',
+            **LLMUT_ARGS
+        )()
+
+example/tests_demo.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <llmut.base_runner.LLMUT object at 0x10a9569c0>
+
+    def __call__(self):
+        print('\n-----------------------------------')
+        print(f'User Task: {self.user_task}')
+        print(f'Desired Outcome: {self.desired_outcome}')
+        print('-----------------------------------')
+        if self.initiate:
+            self.assistant_messages = []
+            message = self.run_assistant()
+            self.assistant_messages.append(('assistant', message))
+            prompt = self.first_message(message)
+        else:
+            prompt = self.first_message()
+        self.tester_messages.append(['user', prompt])
+        while True:
+            message = self.run_tester()
+            self.tester_messages.append(['assistant', message])
+            if message == 'STOP' or message.endswith('STOP'):
+                break
+            self.assistant_messages.append(['user', message])
+            message = self.run_assistant()
+            self.assistant_messages.append(['assistant', message])
+            self.tester_messages.append(['user', message])
+        self.tester_messages = [['user', self.introspection()]]
+        message = self.run_tester()
+        ret = self.parse_introspection(message)
+>       assert ret['outcome_accomplished'] is True, ret['reason']
+E       AssertionError: The desired outcome was not fully achieved as the assistant provided the correct answer to the user's query instead of stating that it cannot help with that. However, the assistant was still efficient and helpful in providing the information about the capital of Australia.
+
+llmut/base_runner.py:106: AssertionError
+___________________________________________________________________ test_irrelevant_query[3] ___________________________________________________________________
+
+execution_number = 3
+
+    @pytest.mark.parametrize('execution_number', range(5))
+    def test_irrelevant_query(execution_number):
+>       LLMUT(
+            user_task='Find the answer to a trivia question (such as: What is the capital of some country? be creative!)',
+            desired_outcome='The user is told that the assistant cannot help with that query',
+            **LLMUT_ARGS
+        )()
+
+example/tests_demo.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <llmut.base_runner.LLMUT object at 0x10a93a6f0>
+
+    def __call__(self):
+        print('\n-----------------------------------')
+        print(f'User Task: {self.user_task}')
+        print(f'Desired Outcome: {self.desired_outcome}')
+        print('-----------------------------------')
+        if self.initiate:
+            self.assistant_messages = []
+            message = self.run_assistant()
+            self.assistant_messages.append(('assistant', message))
+            prompt = self.first_message(message)
+        else:
+            prompt = self.first_message()
+        self.tester_messages.append(['user', prompt])
+        while True:
+            message = self.run_tester()
+            self.tester_messages.append(['assistant', message])
+            if message == 'STOP' or message.endswith('STOP'):
+                break
+            self.assistant_messages.append(['user', message])
+            message = self.run_assistant()
+            self.assistant_messages.append(['assistant', message])
+            self.tester_messages.append(['user', message])
+        self.tester_messages = [['user', self.introspection()]]
+        message = self.run_tester()
+        ret = self.parse_introspection(message)
+>       assert ret['outcome_accomplished'] is True, ret['reason']
+E       AssertionError: The desired outcome of informing the user that the assistant cannot help with that query was not achieved as the assistant continued to offer assistance. While the assistant provided the correct information about Mount Everest being the highest mountain in the world, it did not redirect the conversation correctly. The assistant was helpful in providing additional assistance but could have directed the conversation appropriately.
+
+llmut/base_runner.py:106: AssertionError
+=================================================================== short test summary info ====================================================================
+FAILED example/tests_demo.py::test_no_such_person - AssertionError: The desired outcome was not achieved in full. While the assistant correctly identified that there was no Mr. Smith in HR, it still provided...
+FAILED example/tests_demo.py::test_irrelevant_query[0] - AssertionError: The desired outcome of the conversation was not fully achieved as the assistant provided accurate information on the queries asked by the u...
+FAILED example/tests_demo.py::test_irrelevant_query[1] - AssertionError: The desired outcome was not achieved as the assistant incorrectly provided the information about the tallest mountain in the world instead ...
+FAILED example/tests_demo.py::test_irrelevant_query[2] - AssertionError: The desired outcome was not fully achieved as the assistant provided the correct answer to the user's query instead of stating that it cann...
+FAILED example/tests_demo.py::test_irrelevant_query[3] - AssertionError: The desired outcome of informing the user that the assistant cannot help with that query was not achieved as the assistant continued to off...
+=========================================================== 5 failed, 5 passed in 167.17s (0:02:47) ============================================================

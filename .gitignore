@@ -1,0 +1,8 @@
+# Git Ignore file for Python3 projects:
+*.pyc
+__pycache__
+.venv
+*.pydevproject
+*.project
+*.settings
+*.tmproj

@@ -1,0 +1,132 @@
+# List of 50 records, each an object with the following fields:
+#  record id ('EMPxxxx'), full name, department, job title, phone number, room number
+# Readable yaml file
+# Example:
+#  - id: EMP0001
+#    name: John Doe
+#    department: IT
+#    title: Developer
+#    phone: 123-456-7890
+#    room_number: 123
+# - id: EMP0002
+# etc.
+- id: EMP0001
+  name: John Doe
+  department: IT
+  title: Developer
+  phone: 123-456-7890
+  room_number: 123
+- id: EMP0002
+  name: Jane Doe
+  department: HR
+  title: Manager
+  phone: 123-456-7891
+  room_number: 124
+- id: EMP0003
+  name: John Smith
+  department: IT
+  title: Developer
+  phone: 123-456-7892
+  room_number: 125
+- id: EMP0004
+  name: Jane Smith
+  department: HR
+  title: Manager
+  phone: 123-456-7893
+  room_number: 126
+- id: EMP0005
+  name: John Johnson
+  department: IT
+  title: Developer
+  phone: 123-456-7894
+  room_number: 127
+- id: EMP0006
+  name: Jane Johnson
+  department: HR
+  title: Manager
+  phone: 123-456-7895
+  room_number: 128
+- id: EMP0007
+  name: John Williams
+  department: IT
+  title: Developer
+  phone: 123-456-7896
+  room_number: 129
+- id: EMP0008
+  name: Jane Williams
+  department: HR
+  title: Manager
+  phone: 123-456-7897
+  room_number: 130
+- id: EMP0009
+  name: John Brown
+  department: IT
+  title: Developer
+  phone: 123-456-7898
+  room_number: 131
+- id: EMP0010
+  name: Jane Brown
+  department: HR
+  title: Manager
+  phone: 123-456-7899
+  room_number: 132
+- id: EMP0011
+  name: John Miller
+  department: IT
+  title: Developer
+  phone: 123-456-7900
+  room_number: 133
+- id: EMP0012
+  name: Jane Miller
+  department: HR
+  title: Manager
+  phone: 123-456-7901
+  room_number: 134
+- id: EMP0013
+  name: John Davis
+  department: IT
+  title: Developer
+  phone: 123-456-7902
+  room_number: 135
+- id: EMP0014
+  name: Jane Davis
+  department: HR
+  title: Manager
+  phone: 123-456-7903
+  room_number: 136
+- id: EMP0015
+  name: John Garcia
+  department: IT
+  title: Developer
+  phone: 123-456-7904
+  room_number: 137
+- id: EMP0016
+  name: Jane Garcia
+  department: HR
+  title: Manager
+  phone: 123-456-7905
+  room_number: 138
+- id: EMP0017
+  name: John Rodriguez
+  department: IT
+  title: Developer
+  phone: 123-456-7906
+  room_number: 139
+- id: EMP0018
+  name: Jane Rodriguez
+  department: HR
+  title: Manager
+  phone: 123-456-7907
+  room_number: 140
+- id: EMP0019
+  name: John Martinez
+  department: IT
+  title: Developer
+  phone: 123-456-7908
+  room_number: 141
+- id: EMP0020
+  name: Jane Martinez
+  department: HR
+  title: Manager
+  phone: 123-456-7909
+  room_number: 142
